@@ -1,0 +1,86 @@
+﻿@inherits UmbracoTemplatePage<Documentation>
+@{
+    Layout = "Master.cshtml";
+
+    //the below code is made redundant with model + custom controller
+    //Model.Content.LandingPages is populated with the related nodes fetched from content cache
+
+    //get the related landing pages
+    var ids = UmbracoContext
+                    .Application.Services
+                    .RelationService.GetByParentId(Model.Content.Id)
+                    .Select(x => x.ChildId);
+
+    //fetch them as nodes
+    var products = Umbraco.TypedContent(ids)
+                           .Where(x => x.DocumentTypeAlias == "landingPage").ToList();
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <div class="page-header">
+                <a class="btn btn-default pull-right" href="@Model.Content.Url/edit">Edit</a>
+                <h1>@Umbraco.Field("pageName")</h1>
+            </div>
+
+            @Umbraco.Field("bodyText")
+
+            @if (products.Any())
+            {
+                <hr />
+
+                <h4>Documentation Applies to Products:</h4>
+
+                <ul>
+                    @foreach (var landingPage in products)
+                    {
+                        <li><a href="@landingPage.Url">@landingPage.Name</a></li>
+                    }
+                </ul>
+            }
+
+            @if (!string.IsNullOrEmpty(Model.Content.Images))
+               {
+                var mediaFolders = Umbraco.TypedMedia(Model.Content.Images);
+                <h4>Documentation media:</h4>
+                if (mediaFolders != null)
+                {
+                    foreach (var image in mediaFolders.Children)
+                    {
+                      <img src="@image.GetCropUrl(height: 150, width: 150)" alt="..." class="img-thumbnail">
+                    }
+                }
+            }
+        </div>
+        <div class="col-md-3">
+
+            <ul class="nav nav-list">
+                @foreach (var item in CurrentPage.Children)
+                {
+                    <li>
+                        <a href="@item.Url">@item.Name</a>
+                    </li>
+                }
+            </ul>
+
+            <dl class="nav nav-list" id="doc-history-list"></dl>
+
+            <button id="doc-history" class="btn btn-default"
+                    data-doc-id="@CurrentPage.Id">
+                Load revision history
+            </button>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <footer>
+                Updated by @Umbraco.Field("writerName") on @Umbraco.Field("updateDate", formatAsDate: true)
+            </footer>
+        </div>
+    </div>
+</div>
+
