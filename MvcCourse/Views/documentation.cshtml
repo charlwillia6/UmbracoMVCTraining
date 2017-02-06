@@ -1,19 +1,19 @@
-﻿@inherits UmbracoTemplatePage<Documentation>
+﻿@inherits UmbracoTemplatePage<MvcCourse.Models.DocumentationViewModel>
 @{
     Layout = "Master.cshtml";
 
     //the below code is made redundant with model + custom controller
     //Model.Content.LandingPages is populated with the related nodes fetched from content cache
 
-    //get the related landing pages
-    var ids = UmbracoContext
-                    .Application.Services
-                    .RelationService.GetByParentId(Model.Content.Id)
-                    .Select(x => x.ChildId);
+    ////get the related landing pages
+    //var ids = UmbracoContext
+    //                .Application.Services
+    //                .RelationService.GetByParentId(Model.Content.Id)
+    //                .Select(x => x.ChildId);
 
-    //fetch them as nodes
-    var products = Umbraco.TypedContent(ids)
-                           .Where(x => x.DocumentTypeAlias == "landingPage").ToList();
+    ////fetch them as nodes
+    //var products = Umbraco.TypedContent(ids)
+    //                       .Where(x => x.DocumentTypeAlias == "landingPage").ToList();
 }
 
 
@@ -27,14 +27,14 @@
 
             @Umbraco.Field("bodyText")
 
-            @if (products.Any())
+            @if (Model.Content.LandingPages.Any())
             {
                 <hr />
 
                 <h4>Documentation Applies to Products:</h4>
 
                 <ul>
-                    @foreach (var landingPage in products)
+                    @foreach (var landingPage in Model.Content.LandingPages)
                     {
                         <li><a href="@landingPage.Url">@landingPage.Name</a></li>
                     }

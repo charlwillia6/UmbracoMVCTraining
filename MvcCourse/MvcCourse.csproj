@@ -423,12 +423,24 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Data\Models\Documentation.generated.cs" />
+    <Compile Include="App_Data\Models\File.generated.cs" />
+    <Compile Include="App_Data\Models\Folder.generated.cs" />
+    <Compile Include="App_Data\Models\Homepage.generated.cs" />
+    <Compile Include="App_Data\Models\Image.generated.cs" />
+    <Compile Include="App_Data\Models\LandingPage.generated.cs" />
+    <Compile Include="App_Data\Models\Member.generated.cs" />
+    <Compile Include="App_Data\Models\Textpage.generated.cs" />
     <Compile Include="Controllers\BrokenController.cs" />
+    <Compile Include="Controllers\DocumentationController.cs" />
+    <Compile Include="Controllers\DocumentationFormController.cs" />
     <Compile Include="EventHandlers\DocumentationEventHandler.cs" />
     <Compile Include="Helper\Extensions.cs" />
     <Compile Include="Helper\HtmlHelperExtensions.cs" />
     <Compile Include="Models\BrokenFormModel.cs" />
+    <Compile Include="Models\DocumentationFormModel.cs" />
     <Compile Include="Models\DocumentationVersion.cs" />
+    <Compile Include="Models\DocumentationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -454,6 +466,8 @@
     <Content Include="Views\Partials\Grid\Editors\Base.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap3.cshtml" />
     <Content Include="Views\Partials\Grid\Bootstrap2.cshtml" />
+    <Content Include="Views\Partials\DocumentationForm.cshtml" />
+    <Content Include="Views\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -462,6 +476,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\DocumentationForm\" />
+    <Folder Include="Views\Documentation\" />
     <Folder Include="Views\MacroPartials\" />
   </ItemGroup>
   <ItemGroup>
